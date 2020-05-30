@@ -1,0 +1,7 @@
+{
+  "name": "myAppVuforia",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
