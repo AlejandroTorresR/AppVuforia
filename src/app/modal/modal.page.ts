@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
-import { VideoPlayer } from '@ionic-native/video-player/ngx';
+import { VideoPlayer, VideoOptions } from '@ionic-native/video-player/ngx';
+import { File } from '@ionic-native/file/ngx';
 declare var navigator;
 
 @Component({
@@ -10,9 +11,12 @@ declare var navigator;
   encapsulation: ViewEncapsulation.None
 })
 export class ModalPage implements OnInit {
+  videoOptions: VideoOptions = {
+    volume: 1
+  };
   public options = {
-    databaseXmlFile: 'AllCards.xml',
-    targetList: [ '46986414', '89631139' ],
+    databaseXmlFile: `${this.file.dataDirectory}vuforia/allCards.xml`,
+    targetList: [ '46986414', '89631139', '73580471', '89943723' ],
     showAndroidCloseButton: true,
     autostopOnImageFound: true,
     //overlayMessage: 'Point your camera at a test image...',
@@ -21,7 +25,27 @@ export class ModalPage implements OnInit {
 
   constructor(public modalController: ModalController,
               private videoPlayer: VideoPlayer,
-              public alertController: AlertController) { }
+              private file: File,
+              public alertController: AlertController) {
+
+  }
+
+  ngOnInit() {
+    navigator.VuforiaPlugin.startVuforia(
+      this.options, (data) => {
+        console.log(data);
+        if(data.status.imageFound) {
+          this.playCard(data.result.imageName);
+        }
+        else if (data.status.manuallyClosed) {
+          this.presentAlert("User manually closed Vuforia by pressing back!");
+        }
+      },
+      function(data) {
+        alert("Error: " + data);
+      }
+    );
+  }
 
   dismiss() {
     this.modalController.dismiss({
@@ -29,13 +53,26 @@ export class ModalPage implements OnInit {
     });
   }
 
-  playCard(name){
-    this.videoPlayer.play(`file:///android_asset/www/assets/vuforia/${name}.mp4`,{volume: 1}).then(() => {
+  playCard2(name){ //`${this.file.dataDirectory}media/${name}.mp4` //`file:///android_asset/www/assets/vuforia/${name}.mp4`
+    this.videoPlayer.play(`${this.file.dataDirectory}media/${name}.mp4`,{volume: 1}).then(() => {
      console.log('video completed');
      this.dismiss();
     }).catch(err => {
      console.log(err);
     });
+  }
+
+  async playCard(name){
+    try{
+      let videoUrl = `${this.file.dataDirectory}media/${name}.mp4`;
+      this.videoPlayer.play(videoUrl, this.videoOptions).then(()=>{
+        console.log('video completed');
+        this.dismiss();
+      })
+    }
+    catch(e){
+      console.error(e);
+    }
   }
 
   async presentAlert(name) {
@@ -50,28 +87,7 @@ export class ModalPage implements OnInit {
           }
         }]
     });
-
     await alert.present();
   }
 
-  ngOnInit() {
-    navigator.VuforiaPlugin.startVuforia(
-      this.options,
-      (data) => {
-        // To see exactly what `data` can return, see 'Success callback `data` API' within the plugin's documentation.
-        console.log(data);
-        
-        if(data.status.imageFound) {
-          this.playCard(data.result.imageName);
-          //this.presentAlert(data.result.imageName);
-        }
-        else if (data.status.manuallyClosed) {
-          this.presentAlert("User manually closed Vuforia by pressing back!");
-        }
-      },
-      function(data) {
-        alert("Error: " + data);
-      }
-    );
-  }
 }

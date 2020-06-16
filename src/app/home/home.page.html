@@ -8,6 +8,10 @@
 
 <ion-content>
   <ion-button expand="block" (click)="presentModal()">Show Modal</ion-button>
-  <ion-button expand="block" (click)="playCard('46986414')">Dark Magician</ion-button>
-  <ion-button expand="block" (click)="playCard('89631139')">Blue Eyes</ion-button>
+  <ion-button expand="block" (click)="downlaodVuforia()">Download</ion-button>
+  <p>{{progress | percent}}</p>
+  <p>{{installing | percent}}</p>
+  <ion-button color="secondary" (click)="playCard(c.file)" *ngFor="let c of targetList">{{c.file}}</ion-button>
+  <ion-button color="dark" (click)="downloadSingleCard(c.file, c.url)" *ngFor="let c of targetList">{{c.file}}</ion-button>
+  <ion-button color="danger" (click)="removeSingleCard(c.file)" *ngFor="let c of targetList">{{c.file}}</ion-button>
 </ion-content>

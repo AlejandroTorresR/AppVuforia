@@ -11,6 +11,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { ModalPageModule } from './modal/modal.module';
 
 import { VideoPlayer } from '@ionic-native/video-player/ngx';
+import { FileTransfer } from '@ionic-native/file-transfer/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { Zip } from '@ionic-native/zip/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +26,9 @@ import { VideoPlayer } from '@ionic-native/video-player/ngx';
     StatusBar,
     SplashScreen,
     VideoPlayer,
+    Zip,
+    File, 
+    FileTransfer,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
