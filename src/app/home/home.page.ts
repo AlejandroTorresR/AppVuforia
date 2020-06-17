@@ -22,8 +22,11 @@ export class HomePage implements OnInit{
   public targetList: any = [ 
     {file: '46986414', url: 'https://dl.dropboxusercontent.com/s/qcd6vp0tb22xeki/46986414.mp4'}, 
     {file: '89631139', url: 'https://dl.dropboxusercontent.com/s/97aqqx9oanel8fz/89631139.mp4'},
-    {file: '73580471', url: 'https://dl.dropboxusercontent.com/s/qcd6vp0tb22xeki/46986414.mp4'},
-    {file: '89943723', url: 'https://dl.dropboxusercontent.com/s/qcd6vp0tb22xeki/46986414.mp4'}
+    {file: '73580471', url: 'https://dl.dropboxusercontent.com/s/phqq03w0kr6y2xk/73580471.mp4'},
+    {file: '89943723', url: 'https://dl.dropboxusercontent.com/s/0gvwrtjn2l4g8z0/89943723.mp4'},
+    {file: '38033121', url: 'https://dl.dropboxusercontent.com/s/r1q26dt31j7iei9/38033121.mp4'},
+    {file: '23995346', url: 'https://dl.dropboxusercontent.com/s/ypjo0schn204yb8/23995346.mp4'},
+    {file: '09012916', url: 'https://dl.dropboxusercontent.com/s/6x5d2lq3iui7qzx/09012916.mp4'}
   ]
 
   constructor(public modalController: ModalController, 
